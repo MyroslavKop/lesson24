@@ -5,14 +5,25 @@ import {Title} from "./form-componets/Title";
 import {Buttons} from "./form-componets/Buttons";
 
 
+const getInputValidations = (fieldName, characterLength = 3) => {
+    return {
+        required: `${fieldName} is required`,
+        minLength: {
+            value: characterLength,
+            message: `Must be at least ${characterLength} characters`
+        }
+    };
+};
+
+
 export const ProfileUserForm = () => {
 
     const {register, handleSubmit, formState: {errors}, reset} = useForm();
 
     const handleReset = () => {
         reset({
-            firstname: "",
-            lastname: "",
+            firstName: "",
+            lastName: "",
             country: "",
         });
     };
@@ -28,27 +39,13 @@ export const ProfileUserForm = () => {
             <div className="registration__fields">
                 <label htmlFor="firstname" className="registration__label">Firstname</label>
                 <input type="text" id="firstname" className="registration__input"
-                       placeholder="Type your firstname" {...register("firstname",
-                    {
-                        required: "Firstname is required",
-                        minLength: {
-                            value: 3,
-                            message: "Must be at least 3 characters"
-                        }
-                    })}/>
-                {errors.firstname && (<div style={{color: "red"}}>{errors.firstname.message}</div>)}
+                       placeholder="Type your firstname" {...register("firstName", getInputValidations("Firstname"))}/>
+                {errors.firstName && (<div className="error">{errors.firstName.message}</div>)}
 
                 <label htmlFor="lastname" className="registration__label">Lastname</label>
                 <input type="text" id="lastname" className="registration__input"
-                       placeholder="Type your lastname" {...register("lastname",
-                    {
-                        required: "Lastname is required",
-                        minLength: {
-                            value: 3,
-                            message: "Must be at least 3 characters"
-                        }
-                    })}/>
-                {errors.lastname && (<div style={{color: "red"}}>{errors.lastname.message}</div>)}
+                       placeholder="Type your lastname" {...register("lastName", getInputValidations("Lastname"))}/>
+                {errors.lastName && (<div className="error">{errors.lastName.message}</div>)}
 
                 <label htmlFor="country" className="registration__label">Country</label>
                 <Form.Select id="country" {...register("country", {
@@ -59,7 +56,7 @@ export const ProfileUserForm = () => {
                     <option value="UA">Ukraine</option>
                     <option value="DE">Germany</option>
                 </Form.Select>
-                {errors.country && (<div style={{color: "red"}}>{errors.country.message}</div>)}
+                {errors.country && (<div className="error">{errors.country.message}</div>)}
             </div>
 
             <Buttons onClick={handleReset}/>

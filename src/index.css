@@ -119,3 +119,6 @@ img {
     background-color: #362d2d;
     transition: 0.25s;
 }
+.error {
+    color:red;
+}
